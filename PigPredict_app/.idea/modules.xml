@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Everest_01_IntelligentColor_team31.iml" filepath="$PROJECT_DIR$/.idea/Everest_01_IntelligentColor_team31.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../深度學習環境架設/範例腳本/Pytorch/UNET/.idea/UNET.iml" filepath="$PROJECT_DIR$/../../../深度學習環境架設/範例腳本/Pytorch/UNET/.idea/UNET.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../mgc-django/.idea/mgc-django.iml" filepath="$PROJECT_DIR$/../../../mgc-django/.idea/mgc-django.iml" />
+    </modules>
+  </component>
+</project>
