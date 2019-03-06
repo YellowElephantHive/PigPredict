@@ -9,8 +9,8 @@ import keras
 
 prj_root = os.path.join(os.path.dirname(__file__), os.pardir)
 sys.path.append(prj_root)
-from util.normalize import *
-from util.pickle_util import pm
+from PigPredict_app.util.normalize import *
+from PigPredict_app.util.pickle_util import pm
 
 # pickle objs back
 decoder_input_columns = pm.decoder_input_columns
@@ -18,7 +18,7 @@ vec_dim = len(decoder_input_columns)
 
 
 class InverseDecoder:
-    def __init__(self, decoder_path, monte_carlo_count=200, epoch=2000, early_stop_loss=1e-5, lr=1e-2):
+    def __init__(self, decoder_path, monte_carlo_count=200, epoch=500, early_stop_loss=1e-5, lr=1e-2):
         self.tf_ref = {}
         self.decoder_path = decoder_path
         self.monte_carlo_count = monte_carlo_count

@@ -2,25 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Base</title>
+    <title>Form</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>Input form</h1>
+                </div>
+            </div>
 
-    {% for i in post %}
-    <li>{{ i }}</li>
-    {% endfor %}
+            <div class="container">
+                <form action="" method="post">
 
-    <div class="input-value">
-        <form action="" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p}}
 
-            {% csrf_token %}
-            {{ form.as_p}}
-            <input type = 'submit' value = 'Submit' />
-        </form>
+                    <input type = 'submit' value = 'Submit'>
+
+
+                </form>
+            </div>
+        </div>
     </div>
-
-
 
 
   <!-- Latest compiled and minified jQuery -->

@@ -27,7 +27,7 @@ SECRET_KEY = '3hglvkw%bq+b%h3xj&c9brsd)3e($g0gsl_uw$k%8$em-4+h6a'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['172.16.3.130', 'localhost']
 
 
 # Application definition
@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'PigPredict_app.apps.PigpredictAppConfig',
+    'PigPredict_app',
 ]
 
 MIDDLEWARE = [

@@ -20,8 +20,8 @@ from PigPredict_app import views
 app_name = 'PigPredict_app'
 
 urlpatterns = [
-
     path('', views.index, name='index'),
+    path('forms/', views.get_forms, name='forms'),
+    path('training/', views.training, name='training'),
     path('admin/', admin.site.urls, name='admin'),
-    path('base/', views.form, name='form'),
 ]

@@ -3,9 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 </head>
 <body>
-    <h1> ship </h1>
-
+    <div class="container">
+    <h1> Forecasting Completed !!! </h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>{{ output_table.columns.0 }} </td>
+          <th>{{ output_table.columns.1 }} </td>
+          <th>{{ output_table.columns.2 }} </td>
+          <th>{{ output_table.columns.3 }} </td>
+          <th>{{ output_table.columns.4 }} </td>
+          <th>{{ output_table.columns.5 }} </td>
+          <th>{{ output_table.columns.6 }} </td>
+          <th>{{ output_table.columns.7 }} </td>
+          <th>{{ output_table.columns.8 }} </td>
+          <th>{{ output_table.columns.9 }} </td>
+        <tr>
+      </thead>
+      <tbody>
+         {% for index, row in output_table.iterrows|slice:":1" %}
+         <tr class="table-active">
+           <td> {{row.0}} </td>
+           <td class="table-primary"> {{row.1}} </td>
+           <td class="table-secondary"> {{row.2}} </td>
+           <td class="table-success"> {{row.3}} </td>
+           <td class="table-danger"> {{row.4}} </td>
+           <td class="table-warning"> {{row.5}} </td>
+           <td class="table-info"> {{row.6}} </td>
+           <td class="table-light"> {{row.7}} </td>
+           <td class="table-info"> {{row.8}} </td>
+           <td class="table-warning"> {{row.9}} </td>
+         </tr>
+         {% endfor %}
+      </tbody>
+    </table>
+    </div>
 </body>
 </html>

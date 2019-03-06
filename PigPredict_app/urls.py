@@ -5,7 +5,7 @@ from . import views
 app_name = 'PigPredict_app'
 
 urlpatterms = [
-    path('', views.index, name='index'),
-    path('base', views.form, name='form'),
+    path('forms/', views.get_forms, name='forms'),
+    path('training/', views.training, name='training'),
 
 ]
