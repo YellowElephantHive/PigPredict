@@ -1,0 +1,71 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="PigPredict — an interactive textile color formulation studio powered by the original trained neural network.">
+  <meta name="theme-color" content="#272536">
+  <title>PigPredict — Color Formulation Studio</title>
+  <link rel="icon" href="{% static 'studio/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'studio/style.css' %}">
+  <script type="module" src="{% static 'studio/app.js' %}"></script>
+</head>
+<body>
+  <a class="skip" href="#workspace" data-i18n="skip">Skip to workspace</a>
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="PigPredict home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>PigPredict<small>COLOR FORMULATION STUDIO</small></span></a>
+    <nav aria-label="Main navigation"><a class="nav-active" href="#workspace" data-i18n="workspace">Workspace</a><a href="#method" data-i18n="methodNav">Behind the color</a><a href="https://github.com/YellowElephantHive/PigPredict" target="_blank" rel="noopener">GitHub</a></nav>
+    <div class="language" role="group" aria-label="Language"><button id="language-en" class="active" aria-pressed="true">English</button><button id="language-zh" aria-pressed="false">中文</button></div>
+  </header>
+  <main>
+    <section class="intro">
+      <div><p class="eyebrow" data-i18n="eyebrow">TEXTILE KNOWLEDGE. NEURAL NETWORKS.</p><h1 data-i18n="title">From a color.<br>To a recipe.</h1><p class="lede" data-i18n="intro">Turn a target color into dye formulations. Compare candidates, fine-tune concentrations, and see the model respond.</p></div>
+      <div class="intro-aside"><div class="color-ribbon" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div><p data-i18n="original">Powered by the original trained decoder</p><div class="mini-stats"><div><strong>44</strong><span data-i18n="dyes">Dyes</span></div><div><strong>3</strong><span data-i18n="fabrics">Fabrics</span></div><div><strong>10</strong><span data-i18n="layers">Dense layers</span></div></div></div>
+    </section>
+    <section id="workspace" class="workspace" aria-label="Color formulation workspace">
+      <aside class="target-panel panel">
+        <div class="panel-heading"><div><p class="eyebrow" data-i18n="start">YOUR STARTING POINT</p><h2 data-i18n="targetTitle">Set your target</h2></div><span class="small-tag">CIELAB</span></div>
+        <div class="target-swatch fabric-texture" id="target-swatch"><span data-i18n="targetColor">Target color</span><span id="target-hex">#668F9B</span></div>
+        <form id="target-form" novalidate>
+          <div class="lab-inputs"><label>L*<input id="target-l" type="number" min="0" max="100" step="0.01" value="58.28" required><small data-i18n="lightness">Lightness</small></label><label>a*<input id="target-a" type="number" min="-128" max="128" step="0.01" value="-29.09" required><small data-i18n="redGreen">Green / red</small></label><label>b*<input id="target-b" type="number" min="-128" max="128" step="0.01" value="-7.73" required><small data-i18n="blueYellow">Blue / yellow</small></label></div>
+          <label class="field-label" for="fabric" data-i18n="substrate">Fabric substrate</label><select id="fabric"><option value="0">FVF2184</option><option value="1">FVF2429</option><option value="2">FVF2666</option></select>
+          <div class="preset-heading"><span data-i18n="sampleTargets">Try a measured sample</span><small data-i18n="sampleCaption">From the project archive</small></div>
+          <div id="presets" class="presets"></div>
+          <p id="input-error" class="error" role="alert" hidden></p>
+          <button id="search" class="primary" type="submit" disabled><span data-i18n="find">Find dye recipes</span><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8" cy="8" r="5.5"/><path d="m12 12 5 5"/></svg></button>
+        </form>
+        <div class="run-status" role="status" aria-live="polite"><span class="status-icon" id="status-icon" aria-hidden="true"></span><span id="status" data-i18n="loading">Loading the original model…</span></div>
+        <p class="target-note" data-i18n="targetNote">Choose a fabric, then search. Each candidate uses a dye combination found in the historical recipes.</p>
+      </aside>
+      <div class="result-column">
+        <div class="results-top"><div><p class="eyebrow" data-i18n="resultEyebrow">COLOR, MADE TANGIBLE</p><h2 data-i18n="resultTitle">Your formulation</h2></div><button id="export" class="secondary" disabled><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 13v4h14v-4"/></svg><span data-i18n="export">Export recipe</span></button></div>
+        <div id="stale-notice" class="notice" hidden data-i18n="stale">Target changed. Search again to update these recipes.</div>
+        <div id="empty-state" class="panel empty-state"><div class="empty-art" aria-hidden="true"><i></i><i></i><i></i></div><h3 data-i18n="emptyTitle">A formulation begins with a color.</h3><p data-i18n="emptyText">Select a sample or enter your Lab values, then find matching recipes.</p></div>
+        <div id="results" hidden>
+          <div class="comparison panel">
+            <div class="color-pair"><div id="reference-color" class="fabric-texture"><span data-i18n="targetColor">Target color</span><span id="reference-values" class="lab-caption"></span></div><div id="predicted-color" class="fabric-texture"><span data-i18n="predictedColor">Model-predicted color</span><span id="predicted-values" class="lab-caption"></span></div></div>
+            <div class="comparison-footer"><div class="delta-metric"><span data-i18n="predictedDelta">Predicted ΔE₇₆</span><strong id="delta">—</strong></div><div class="residuals" id="residuals"></div><p data-i18n="previewNote">D65 / sRGB screen preview.<br>Color difference is computed in Lab.</p></div>
+          </div>
+          <section class="recipe-panel panel">
+            <div class="panel-heading"><div><p class="eyebrow" data-i18n="candidatesEyebrow">EXPLORE THE POSSIBILITIES</p><h3 data-i18n="candidates">Candidate recipes</h3></div><span id="candidate-count" class="small-tag"></span></div>
+            <div class="candidate-list" id="candidate-list" aria-label="Candidate recipes"></div>
+            <div class="recipe-toolbar"><div><h3 data-i18n="fineTune">Fine-tune this recipe</h3><p data-i18n="fineTuneText">Adjust a concentration to see its effect on the predicted color.</p></div><button class="text-button" id="reset-recipe" data-i18n="reset">Reset recipe</button></div>
+            <div class="recipe-legend"><span data-i18n="dyeColumn">DYE</span><span data-i18n="concentrationColumn">CONCENTRATION</span><span data-i18n="valueColumn">VALUE</span></div>
+            <div id="recipe-controls"></div>
+            <div class="recipe-bottom"><p data-i18n="concentrationNote">Concentrations use the original dataset scale.</p><div><span data-i18n="total">Total concentration</span><strong id="total">—</strong></div></div>
+          </section>
+          <div class="search-details"><span id="result-caption"></span><button id="revert" class="text-button" data-i18n="revert" hidden>Return to optimized recipe</button></div>
+        </div>
+      </div>
+    </section>
+    <section id="method" class="method-section">
+      <div class="section-heading"><div><p class="eyebrow" data-i18n="methodEyebrow">BEHIND THE COLOR</p><h2 data-i18n="methodTitle">Manufacturing knowledge meets inverse design.</h2></div><p data-i18n="methodIntro">The network learns the forward relationship between a recipe and its color. Inverse search turns that relationship into a formulation tool.</p></div>
+      <div class="method-grid"><article><span class="method-icon" aria-hidden="true">◧</span><h3 data-i18n="method1">Start with process data</h3><p data-i18n="method1text">Measured Lab values, dye concentrations and fabric types form the foundation. Historical recipes supply relevant dye combinations.</p></article><article><span class="method-icon" aria-hidden="true">⌘</span><h3 data-i18n="method2">Learn recipe to color</h3><p data-i18n="method2text">A 10-layer neural decoder maps 44 dye channels and 3 fabric indicators to L*, a* and b*.</p></article><article><span class="method-icon" aria-hidden="true">◎</span><h3 data-i18n="method3">Search color to recipe</h3><p data-i18n="method3text">Keep the trained weights fixed. Optimize the dye concentrations, then rank candidates by their predicted color difference.</p></article></div>
+      <details class="technical"><summary data-i18n="technical">Model details & engineering</summary><div class="technical-content"><dl><div><dt data-i18n="architecture">Architecture</dt><dd>47 → 128 × 7 → 32 → 16 → 3</dd></div><div><dt data-i18n="activation">Activation</dt><dd>LeakyReLU · α = 0.5</dd></div><div><dt data-i18n="parameters">Trained parameters</dt><dd>109,923</dd></div><div><dt data-i18n="runtime">Interactive runtime</dt><dd>JavaScript · Web Worker · Django</dd></div></dl><p data-i18n="engineeringText">The refreshed application uses the archived model weights with a deterministic, bounded inverse solver. A Web Worker keeps the interface responsive; numeric checks compare browser predictions with the original HDF5 weights.</p><a href="https://github.com/YellowElephantHive/PigPredict#readme" target="_blank" rel="noopener" data-i18n="readDocs">Read the project documentation</a></div></details>
+    </section>
+  </main>
+  <footer><a class="footer-brand" href="#">PigPredict</a><p data-i18n="footer">A textile color formulation project · Original work 2018–2019 · Interface refreshed 2026</p><span>Yu-Chun Lai</span></footer>
+  <noscript>This interactive studio requires JavaScript. 此配色工作台需要啟用 JavaScript。</noscript>
+</body>
+</html>

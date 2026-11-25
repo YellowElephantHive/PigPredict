@@ -22,12 +22,12 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '3hglvkw%bq+b%h3xj&c9brsd)3e($g0gsl_uw$k%8$em-4+h6a'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'pigpredict-local-development-only')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', '1') == '1'
 
-ALLOWED_HOSTS = ['172.16.3.130', 'localhost']
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1,[::1]').split(',')
 
 
 # Application definition
@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'PigPredict.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, '.runtime', 'db.sqlite3'),
     }
 }
 
@@ -121,3 +121,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+os.makedirs(os.path.join(BASE_DIR, '.runtime'), exist_ok=True)
+if not DEBUG and SECRET_KEY == 'pigpredict-local-development-only':
+    raise RuntimeError('Set DJANGO_SECRET_KEY before disabling development mode')
