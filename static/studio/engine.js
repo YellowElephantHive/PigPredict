@@ -129,4 +129,3 @@ export function labToRgb(lab) {
   return linear.map(v => Math.round(255 * Math.max(0, Math.min(1, v <= 0.0031308 ? 12.92*v : 1.055*v**(1/2.4)-0.055))));
 }
 export const rgbCss = lab => `rgb(${labToRgb(lab).join(',')})`;
-

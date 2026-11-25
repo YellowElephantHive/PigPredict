@@ -103,4 +103,3 @@ def training(request):
     return render(request, 'PigPredict_app/index.html', context)
 
 #def BackToFormPage(request):
-
